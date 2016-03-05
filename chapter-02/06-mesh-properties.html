@@ -157,10 +157,33 @@
 
         guiTranslate = gui.addFolder('translate');
 
-        guiTranslate.add(controls, 'translateX', -10, 10);
-        guiTranslate.add(controls, 'translateY', -10, 10);
-        guiTranslate.add(controls, 'translateZ', -10, 10);
-        guiTranslate.add(controls, 'translate');
+        var translateX = guiTranslate.add(controls,'translateX',-1,1);
+     	var translateY = guiTranslate.add(controls,'translateY',-1,1);
+    	var translateZ = guiTranslate.add(controls,'translateZ',-1,1);
+    
+    	var tranX = [];
+    	var translateDistX = 0;
+    	translateX.listen();
+    	translateX.onChange(function(value){
+    		tranX.push(controls.translateX);
+    		if(tranX.length>=2)
+    			translateDistX = tranX[tranX.length-1]-tranX[tranX.length-2];
+    		else
+    			translateDistX = tranX[tranX.length-1];
+    
+    		cube.translateX(translateDistX);
+    	});
+    
+    	var tranY = [];
+    	var translateDistY = 0;
+    	translateY.listen();
+    	translateY.onChange(function(value){
+    		tranY.push(controls.translateY);
+    		if(tranY.length>=2)
+    			translateDistY = tranY[tranY.length-1]-tranY[tranY.length-2];
+    		else
+    			translateDistY = tranY[tranY.length-1];
+    	});
 
         gui.add(controls, 'visible');
 
@@ -178,6 +201,8 @@
             cube.rotation.x = controls.rotationX;
             cube.rotation.y = controls.rotationY;
             cube.rotation.z = controls.rotationZ;
+            
+            cube.translateY(translateDistY);
 
             cube.scale.set(controls.scaleX, controls.scaleY, controls.scaleZ);
 
