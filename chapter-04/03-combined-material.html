@@ -72,7 +72,8 @@
             this.removeCube = function () {
                 var allChildren = scene.children;
                 var lastObject = allChildren[allChildren.length - 1];
-                if (lastObject instanceof THREE.Mesh) {
+                //if (lastObject instanceof THREE.Mesh) {
+                if(lastObject.children.length==2){
                     scene.remove(lastObject);
                     this.numberOfObjects = scene.children.length;
                 }
